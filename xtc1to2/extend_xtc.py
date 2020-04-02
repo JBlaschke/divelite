@@ -90,8 +90,16 @@ def extend_xtc(tmp_path, seed_dgrams, n_total_dgrams):
     assert nevt>0 #make sure we get events
 
 if __name__ == "__main__":
+    import sys
     import pathlib
+
     #xtc_file = "/gpfs/alpine/proj-shared/chm137/data/LD91/old_data.xtc2"
-    xtc_file = "/reg/d/psdm/xpp/xpptut15/scratch/mona/old_data.xtc2"
-    seed_dgrams = collect_dgrams(10, xtc_file)
-    extend_xtc(pathlib.Path('.'), seed_dgrams, 100)
+    #xtc_file = "/reg/d/psdm/xpp/xpptut15/scratch/mona/old_data.xtc2"
+
+    # user specifies: 1) number of frames to choose, 2) originating data file
+    xtc_file       =     sys.argv[0]
+    n_total_dgrams = int(sys.argv[1])
+    n_seed_dgrams  = int(sys.argv[2])
+
+    seed_dgrams = collect_dgrams(n_seed_dgrams, xtc_file)
+    extend_xtc(pathlib.Path('.'), seed_dgrams, n_total_dgrams)
