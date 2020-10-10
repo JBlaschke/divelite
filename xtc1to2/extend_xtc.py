@@ -5,8 +5,8 @@ import os
 
 
 def collect_dgrams(n_dgrams, seed_file):
-    print(f"Collecting {n_dgrams} from {seed_file}") 
-    ds = DataSource(files=xtc_file)
+    print(f"Collecting {n_dgrams} from {seed_file}")
+    ds = DataSource(files=seed_file)
     run = next(ds.runs())
     det = run.Detector('cspad')
     dgrams = []
@@ -61,7 +61,7 @@ def extend_xtc(tmp_path, seed_dgrams, n_total_dgrams):
 
         my_data = seed_dgrams[cn_seed_dgrams]
         cydgram.addDet(nameinfo, alg, my_data)
-        
+
         # only do this for the first two dgrams: name info for config, and
         # the runinfo data for beginrun
         if i<2: cydgram.addDet(runinfo_nameinfo, runinfo_alg, runinfo_data)
@@ -74,7 +74,7 @@ def extend_xtc(tmp_path, seed_dgrams, n_total_dgrams):
             transitionid = 12 # L1Accept
         xtc_bytes = cydgram.get(timestamp,transitionid)
         f.write(xtc_bytes)
-        
+
         cn_seed_dgrams += 1
         i += 1
 
@@ -86,7 +86,7 @@ def extend_xtc(tmp_path, seed_dgrams, n_total_dgrams):
     assert myrun.runnum==runinfo_data['runnum']
     for nevt,evt in enumerate(myrun.events()):
         assert evt._dgrams[0].cspad[0].raw.raw.shape == (32, 185, 388)
-    
+
     assert nevt>0 #make sure we get events
 
 if __name__ == "__main__":
