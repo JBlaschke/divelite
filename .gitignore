@@ -58,3 +58,7 @@ bin/
 *.exe
 *.out
 *.app
+
+
+# python
+__pycache__
